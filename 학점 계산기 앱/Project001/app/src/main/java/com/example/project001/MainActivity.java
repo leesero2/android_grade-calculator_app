@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout category, score, credit;
     private Button btnNext1, btnNext2, btnNext3;
     private EditText edtSubject;
+    private InputMethodManager imm;
+
 
     //넘버피커 안의 데이터
     private String[] sCategory = new String[]{"부전선택","부전필수","복전선택","복전필수","전공선택","전공필수","교양선택","교양필수","일반선택","기타"};
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         edtSubject = findViewById(R.id.edtSubject);
         npScore = findViewById(R.id.npScore);
         npCredit = findViewById(R.id.npCredit);
+        edtSubject = findViewById(R.id.edtSubject);
+        //키보드 객체
+        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
         //초기화
         category.setVisibility(View.GONE);
@@ -119,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         txtCategory.setOnClickListener(txtButton);
         txtScore.setOnClickListener(txtButton);
         txtCredit.setOnClickListener(txtButton);
+        //input_키보드
+        edtSubject.setOnFocusChangeListener(edtFocus);
+        //edtSubject.setOnEditorActionListener(complete);
     }
 
     //end onResume===============================================================================
@@ -238,6 +247,25 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    private EditText.OnFocusChangeListener edtFocus = new View.OnFocusChangeListener() {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus) {
+            if(!hasFocus){
+                //포커스를 잃을 경우 키보드 닫기
+                imm.hideSoftInputFromWindow(edtSubject.getWindowToken(), 0);
+            }
+            else {
+                txtCategory.setSelected(false);
+                txtScore.setSelected(false);
+                txtCredit.setSelected(false);
+                category.setVisibility(View.GONE);
+                score.setVisibility(View.GONE);
+                credit.setVisibility(View.GONE);
+                imm.showSoftInput(edtSubject,0);
+            }
+        }
+    };//end EditText.OnFocusChangeListener edtFocus
+
     private Button.OnClickListener next = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -285,7 +313,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public  void addButtonClick(View view){
+    public void addButtonClick(View view){
         EditText et_name = (EditText)findViewById(R.id.txtName) ;
         String sName = et_name.getText().toString();
         EditText et_score = (EditText)findViewById(R.id.txtScore1) ;
