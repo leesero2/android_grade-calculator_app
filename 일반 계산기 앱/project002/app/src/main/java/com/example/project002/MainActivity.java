@@ -11,6 +11,10 @@ import com.example.project002.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     boolean isFirstInput = true;
+    double resultNumber = 0;
+    String operator = "+";
+
+
     ActivityMainBinding activityMainBinding;
 
     @Override
@@ -25,12 +29,32 @@ public class MainActivity extends AppCompatActivity {
         if(isFirstInput){
             //activityMainBinding.resultTxt.setText(view.getTag().toString()); 처럼 사용가능
             activityMainBinding.resultTxt.setText(getButtonText);
-            activityMainBinding.mathTxt.setText(getButtonText);
+            //activityMainBinding.mathTxt.setText(getButtonText);
             isFirstInput = false;
         }else{
             activityMainBinding.resultTxt.append(getButtonText);
-            activityMainBinding.mathTxt.append(getButtonText);
+            //activityMainBinding.mathTxt.append(getButtonText);
         }
     }
+
+    public void operatorClick (View view){
+        double inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
+
+        if(operator.equals("+")){
+            resultNumber = resultNumber + inputNumber;
+        }else if(operator.equals("-")){
+            resultNumber = resultNumber - inputNumber;
+        }else if(operator.equals("x")){
+            resultNumber = resultNumber * inputNumber;
+        }else if(operator.equals("÷")){
+            resultNumber = resultNumber / inputNumber;
+        }
+        activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
+        isFirstInput = true;
+        operator = view.getTag().toString();
+        activityMainBinding.mathTxt.append(inputNumber + " " + operator + " ");
+
+    }
+
 
 }
