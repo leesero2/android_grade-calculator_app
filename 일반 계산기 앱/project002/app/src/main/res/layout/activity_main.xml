@@ -10,6 +10,8 @@
         android:id="@+id/button68"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:onClick="pointButtonClick"
+        android:tag="."
         android:text="."
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

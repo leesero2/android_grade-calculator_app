@@ -46,8 +46,21 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.mathTxt.setText("");
         resultNumber = 0;
         operator = "+";
+        isFirstInput = true;
     }
 
+    public void pointButtonClick (View view){
+        if(isFirstInput){
+            activityMainBinding.resultTxt.setText("0" +view.getTag().toString());
+            isFirstInput = false;
+        }else{
+            if(activityMainBinding.resultTxt.getText().toString().contains(".")){
+                Toast.makeText(this, "이미 소숫점이 존재합니다.",Toast.LENGTH_LONG).show();
+            }else{
+                activityMainBinding.resultTxt.append(view.getTag().toString());
+            }
+        }
+    }
 
 
     public void operatorClick (View view){
