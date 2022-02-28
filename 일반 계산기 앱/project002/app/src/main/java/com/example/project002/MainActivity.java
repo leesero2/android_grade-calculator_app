@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.project002.databinding.ActivityMainBinding;
@@ -12,9 +11,11 @@ import com.example.project002.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     boolean isFirstInput = true;
+    boolean isOperatorClick = false;
     double resultNumber = 0;
-    String operator = "+";
-
+    double inputNumber = 0; //전역변수로 선언
+    String operator = "=";
+    String lastOperator = "+";
 
     ActivityMainBinding activityMainBinding;
 
@@ -62,24 +63,57 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void operatorClick (View view){
-        double inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
+        isOperatorClick = true;
 
-        if(operator.equals("+")){
-            resultNumber = resultNumber + inputNumber;
-        }else if(operator.equals("-")){
-            resultNumber = resultNumber - inputNumber;
-        }else if(operator.equals("x")){
-            resultNumber = resultNumber * inputNumber;
-        }else if(operator.equals("÷")){
-            resultNumber = resultNumber / inputNumber;
-        }
+        inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
+
+        resultNumber = calculator(resultNumber, inputNumber, operator);
+
         activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
         isFirstInput = true;
         operator = view.getTag().toString();
         activityMainBinding.mathTxt.append(inputNumber + " " + operator + " ");
+    }
 
+    public void equalsButtonClick (View view){
+        if(isFirstInput){
+            if(isOperatorClick){
+                activityMainBinding.mathTxt.setText(resultNumber + " " + lastOperator + " " + inputNumber + " =");
+                resultNumber = calculator(resultNumber,inputNumber,lastOperator);
+                activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
+            }
+        }else {
+            inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
+
+            resultNumber = calculator(resultNumber, inputNumber, operator);
+            lastOperator = operator;
+            activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
+            isFirstInput = true;
+            operator = view.getTag().toString();
+            activityMainBinding.mathTxt.append(inputNumber + " " + operator + " ");
+        }
+    }
+
+    private double calculator(double resultNumber, double inputNumber, String operator) {
+        switch (operator){
+            case "=":
+                resultNumber = inputNumber;
+                break;
+            case "+":
+                resultNumber = resultNumber + inputNumber;
+                break;
+            case "_":
+                resultNumber = resultNumber - inputNumber;
+                break;
+            case "x":
+                resultNumber = resultNumber * inputNumber;
+                break;
+            case "÷":
+                resultNumber = resultNumber / inputNumber;
+                break;
+        }
+        return resultNumber;
     }
 
 
