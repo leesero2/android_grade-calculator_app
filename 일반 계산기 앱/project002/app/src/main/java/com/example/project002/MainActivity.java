@@ -12,11 +12,11 @@ import com.example.project002.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     boolean isFirstInput = true; //계산기에선 이 버튼이 첫번째로 입력한 숫자냐 아니냐를 확인하기위해 boolean으로 변수 isFirstInput 생성
-    boolean isOperatorClick = false; //
+    boolean isOperatorClick = false; //연산자가 눌렀는지 안눌렀는지 체크하는 변수 생성
     double resultNumber = 0; //결과값을 저장할 변수 생성
     double inputNumber = 0; //전역변수로 선언
     String operator = "="; //연산자를 저장할 변수 생성
-    String lastOperator = "+"; //
+    String lastOperator = "+"; //마지막 연산자 변수 생성
 
     ActivityMainBinding activityMainBinding; //뷰바인딩 선언
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             isFirstInput = false; //이제 첫번째 입력이 아니기 때문에 isFirstInput을 false로 변경
             if(operator.equals("=")){
                 activityMainBinding.mathTxt.setText(null);
-                isOperatorClick = false;
+                isOperatorClick = false; //연산을 끝냈으니 false 로 변경
             }
         }else{ //isFirstInput 값이 false이면 조건 발동
             if(activityMainBinding.resultTxt.getText().toString().equals("0")){ //0버튼 (테그값이 0) 이라면
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         resultNumber = 0; //결과 변수도 0으로 초기화
         operator = "+"; //연산자도 +로 초기화
         isFirstInput = true; //아무것도 없는 상황이라 처음 입력으로 돌아왔기 때문에 true로 초기화
-        isOperatorClick = false;
+        isOperatorClick = false; //초기화 했으니 연산을 false로 변경
     }
 
     //소수점 버튼 메소드
@@ -76,25 +76,24 @@ public class MainActivity extends AppCompatActivity {
 
     //연산자 메소드
     public void operatorClick (View view){
-        isOperatorClick = true;
-        lastOperator = view.getTag().toString();
+        isOperatorClick = true; //연산자를 눌렀으니 true로 초기화
+        lastOperator = view.getTag().toString(); //마지막에 입력된 연산자를 갖고옴
         if(isFirstInput){
-            if(operator.equals("=")){ //연산자 비료를 통해 참이면
-                operator = view.getTag().toString();
+            if(operator.equals("=")){ //연산자 비교를 통해 참이면
+                operator = view.getTag().toString(); //지금 누른 연산자를 저장
                 resultNumber = Double.parseDouble(activityMainBinding.resultTxt.toString());
                 activityMainBinding.mathTxt.setText(resultNumber + " " + operator + " ");
             }else{
-                operator = view.getTag().toString();
+                operator = view.getTag().toString(); //지금 누른 연산자를 저장
                 String getMathTxt = activityMainBinding.mathTxt.getText().toString();
-                String subString = getMathTxt.substring(0, getMathTxt.length() - 2);
+                String subString = getMathTxt.substring(0, getMathTxt.length() - 2); //0번부터 getMathTxt 길이에서 2개를 삭제
                 activityMainBinding.mathTxt.setText(subString);
                 activityMainBinding.mathTxt.append(operator + " ");
             }
 
         }else{
             inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString()); //맨앞에 Double inputNumber... 로 지정하게되면 지정된 함수의 자료형은 double인데 결과를 받는데이터는 String이라 Double.parseDouble을 통해 문자열을 double형으로 변환하게끔 선언
-            resultNumber = calculator(resultNumber, inputNumber, operator);
-
+            resultNumber = calculator(resultNumber, inputNumber, operator); //받아온 연산 값을 resultNumber에 저장
             activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
             isFirstInput = true;
             operator = view.getTag().toString();
@@ -107,17 +106,16 @@ public class MainActivity extends AppCompatActivity {
     public void equalsButtonClick (View view){
         if(isFirstInput){
             if(isOperatorClick){
-                activityMainBinding.mathTxt.setText(resultNumber + " " + lastOperator + " " + inputNumber + " =");
+                activityMainBinding.mathTxt.setText(resultNumber + " " + lastOperator + " " + inputNumber + " ="); //마지막 결과, 마지막 연산, 인풋 넘버
                 resultNumber = calculator(resultNumber,inputNumber,lastOperator);
                 activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
             }
         }else {
             inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
-
-            resultNumber = calculator(resultNumber, inputNumber, operator);
-            lastOperator = operator;
-            activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
-            isFirstInput = true;
+            resultNumber = calculator(resultNumber, inputNumber, operator); //받아온 연산 값을 resultNumber에 저장
+            lastOperator = operator; //연산자를 lastOperator에 저장
+            activityMainBinding.resultTxt.setText(String.valueOf(resultNumber)); //resultTxt에 결과 함수를 넣음
+            isFirstInput = true; //결과가 끝났기에 true로 변경
             operator = view.getTag().toString();
             activityMainBinding.mathTxt.append(inputNumber + " " + operator + " ");
         }
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //연산 함수 메소드
-    private double calculator(double resultNumber, double inputNumber, String operator) {
+    private double calculator(double resultNumber, double inputNumber, String operator) { //resultNumber inputNumber operator 을 파라메타로 받아옴
         switch (operator){ //operator 변수를 스위치문을 통해 각 버튼에 맞는 함수를 실행
             case "=":
                 resultNumber = inputNumber;
