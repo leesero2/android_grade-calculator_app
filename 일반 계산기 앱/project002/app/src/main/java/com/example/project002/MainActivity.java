@@ -11,25 +11,26 @@ import com.example.project002.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean isFirstInput = true;
-    boolean isOperatorClick = false;
+    boolean isFirstInput = true; //계산기에선 이 버튼이 첫번째로 입력한 숫자냐 아니냐를 확인하기위해 boolean으로 변수 isFirstInput 생성
+    boolean isOperatorClick = false; //
     double resultNumber = 0;
     double inputNumber = 0; //전역변수로 선언
     String operator = "=";
     String lastOperator = "+";
 
-    ActivityMainBinding activityMainBinding;
+    ActivityMainBinding activityMainBinding; //뷰바인딩 선언
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater()); //뷰바인딩 선언
+        setContentView(activityMainBinding.getRoot()); //뷰비안딩 등록
     }
 
+    //숫자버튼 클릭 메소드
     public void numButtonClick(View view){
         String getButtonText = view.getTag().toString(); //xml 디자인에 tag값을 넣어주면 따로 findid값을 지정안해도 getTag()를 통해 사용가능
-        if(isFirstInput){
+        if(isFirstInput){ //isFirstInput 값이 true이면 조건 발동
             //activityMainBinding.resultTxt.setText(view.getTag().toString()); 처럼 사용가능
             activityMainBinding.resultTxt.setText(getButtonText);
             isFirstInput = false;
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //전부 지우는 메소드
     public void allClearButtonClick (View view){
         activityMainBinding.resultTxt.setText("0");
         activityMainBinding.mathTxt.setText("");
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         isOperatorClick = false;
     }
 
+    //소수점 버튼 메소드
     public void pointButtonClick (View view){
         if(isFirstInput){
             activityMainBinding.resultTxt.setText("0" +view.getTag().toString());
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //연산자 메소드
     public void operatorClick (View view){
         isOperatorClick = true;
         lastOperator = view.getTag().toString();
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // '=' 메소드
     public void equalsButtonClick (View view){
         if(isFirstInput){
             if(isOperatorClick){
