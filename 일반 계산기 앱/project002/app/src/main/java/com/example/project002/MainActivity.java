@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isFirstInput = true; //계산기에선 이 버튼이 첫번째로 입력한 숫자냐 아니냐를 확인하기위해 boolean으로 변수 isFirstInput 생성
     boolean isOperatorClick = false; //연산자가 눌렀는지 안눌렀는지 체크하는 변수 생성
     double resultNumber = 0; //결과값을 저장할 변수 생성
-    double inputNumber = 0; //전역변수로 선언
+    double inputNumber = 0; //전역변수로 선언 (마지막에 사용된 값을 알수없기 때문에)
     String operator = "="; //연산자를 저장할 변수 생성
     String lastOperator = "+"; //마지막 연산자 변수 생성
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // '=' 메소드
+    // '=' 메소드 (이걸 만든 이유는 일반 윈도우 계산기에선 =을 연달아 누르면 마지막에 했던 연산을 쭉 이어가기 때문에 예외처리를 함)
     public void equalsButtonClick (View view){
         if(isFirstInput){
             if(isOperatorClick){
@@ -113,10 +113,10 @@ public class MainActivity extends AppCompatActivity {
         }else {
             inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
             resultNumber = calculator(resultNumber, inputNumber, operator); //받아온 연산 값을 resultNumber에 저장
-            lastOperator = operator; //연산자를 lastOperator에 저장
+            lastOperator = operator; //마지막 연산자를 lastOperator에 저장
             activityMainBinding.resultTxt.setText(String.valueOf(resultNumber)); //resultTxt에 결과 함수를 넣음
             isFirstInput = true; //결과가 끝났기에 true로 변경
-            operator = view.getTag().toString();
+            operator = view.getTag().toString(); //현재 연산자를 operator에 저장
             activityMainBinding.mathTxt.append(inputNumber + " " + operator + " ");
         }
     }
