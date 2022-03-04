@@ -13,10 +13,10 @@ public class MainActivity extends AppCompatActivity {
 
     boolean isFirstInput = true; //계산기에선 이 버튼이 첫번째로 입력한 숫자냐 아니냐를 확인하기위해 boolean으로 변수 isFirstInput 생성
     boolean isOperatorClick = false; //
-    double resultNumber = 0;
+    double resultNumber = 0; //결과값을 저장할 변수 생성
     double inputNumber = 0; //전역변수로 선언
-    String operator = "=";
-    String lastOperator = "+";
+    String operator = "="; //연산자를 저장할 변수 생성
+    String lastOperator = "+"; //
 
     ActivityMainBinding activityMainBinding; //뷰바인딩 선언
 
@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
     //숫자버튼 클릭 메소드
     public void numButtonClick(View view){
-        String getButtonText = view.getTag().toString(); //xml 디자인에 tag값을 넣어주면 따로 findid값을 지정안해도 getTag()를 통해 사용가능
+        String getButtonText = view.getTag().toString(); // 테그값을 받아오는 변수 getButtonText 변수를 생성
+        //xml 디자인에 tag값을 넣어주면 따로 findid값을 지정안해도 getTag()를 통해 사용가능
+
         if(isFirstInput){ //isFirstInput 값이 true이면 조건 발동
             //activityMainBinding.resultTxt.setText(view.getTag().toString()); 처럼 사용가능
             activityMainBinding.resultTxt.setText(getButtonText); //resultTxt에 setText함수를 통해 버튼값을 셋팅함
@@ -121,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //백스페이스 버튼 메소드
     public void backspaceButtonClick(View view){
         if(!isFirstInput){
             String getResultTxt = activityMainBinding.resultTxt.getText().toString();
@@ -134,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //연산 함수 메소드
     private double calculator(double resultNumber, double inputNumber, String operator) {
         switch (operator){
             case "=":
