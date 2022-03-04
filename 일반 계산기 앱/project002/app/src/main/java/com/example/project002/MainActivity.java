@@ -63,13 +63,13 @@ public class MainActivity extends AppCompatActivity {
     //소수점 버튼 메소드
     public void pointButtonClick (View view){
         if(isFirstInput){
-            activityMainBinding.resultTxt.setText("0" +view.getTag().toString());
-            isFirstInput = false;
+            activityMainBinding.resultTxt.setText("0" + view.getTag().toString()); //append가 아닌 setText를 통해 0.을 구현하기위해 "0"을 더해줌
+            isFirstInput = false; //첫번째 입력이 끝났기에 false값으로 초기화
         }else{
-            if(activityMainBinding.resultTxt.getText().toString().contains(".")){
-                Toast.makeText(this, "이미 소숫점이 존재합니다.",Toast.LENGTH_LONG).show();
+            if(activityMainBinding.resultTxt.getText().toString().contains(".")){ //contains함수를 통해 소수점이 이미 존재한다면
+                Toast.makeText(this, "이미 소숫점이 존재합니다.",Toast.LENGTH_LONG).show(); //이미 소숫점이 존재한다는 토스트 발생
             }else{
-                activityMainBinding.resultTxt.append(view.getTag().toString());
+                activityMainBinding.resultTxt.append(view.getTag().toString()); //아니라면 resulrTxt에 값을 붙임
             }
         }
     }
