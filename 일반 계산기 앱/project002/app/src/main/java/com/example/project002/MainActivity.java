@@ -32,18 +32,18 @@ public class MainActivity extends AppCompatActivity {
         String getButtonText = view.getTag().toString(); //xml 디자인에 tag값을 넣어주면 따로 findid값을 지정안해도 getTag()를 통해 사용가능
         if(isFirstInput){ //isFirstInput 값이 true이면 조건 발동
             //activityMainBinding.resultTxt.setText(view.getTag().toString()); 처럼 사용가능
-            activityMainBinding.resultTxt.setText(getButtonText);
-            isFirstInput = false;
+            activityMainBinding.resultTxt.setText(getButtonText); //resultTxt에 setText함수를 통해 버튼값을 셋팅함
+            isFirstInput = false; //이제 첫번째 입력이 아니기 때문에 isFirstInput을 false로 변경
             if(operator.equals("=")){
                 activityMainBinding.mathTxt.setText(null);
                 isOperatorClick = false;
             }
-        }else{
-            if(activityMainBinding.resultTxt.getText().toString().equals("0")){
-                Toast.makeText(this, "0으로 시작되는 숫자는 없습니다.", Toast.LENGTH_LONG).show();
+        }else{ //isFirstInput 값이 false이면 조건 발동
+            if(activityMainBinding.resultTxt.getText().toString().equals("0")){ //0버튼 (테그값이 0) 이라면
+                Toast.makeText(this, "0으로 시작되는 숫자는 없습니다.", Toast.LENGTH_LONG).show(); //토스트를 발생시킴
                 isFirstInput = true;
-            }else{
-                activityMainBinding.resultTxt.append(view.getTag().toString());
+            }else{ //그게 아니라면
+                activityMainBinding.resultTxt.append(view.getTag().toString()); //append 함수를 통해 값을 이어붙임
             }
         }
     }
