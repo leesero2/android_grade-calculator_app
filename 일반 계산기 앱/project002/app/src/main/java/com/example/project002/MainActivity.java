@@ -43,20 +43,20 @@ public class MainActivity extends AppCompatActivity {
         }else{ //isFirstInput 값이 false이면 조건 발동
             if(activityMainBinding.resultTxt.getText().toString().equals("0")){ //0버튼 (테그값이 0) 이라면
                 Toast.makeText(this, "0으로 시작되는 숫자는 없습니다.", Toast.LENGTH_LONG).show(); //토스트를 발생시킴
-                isFirstInput = true;
+                isFirstInput = true; //처음에 0으로 입력받았기 때문에 데이터가 입력이 안된상황이라 isFirstInput 데이터를 true으로 선언 ( 이거안하면 두번재 입력받았다고 인식하기 때문)
             }else{ //그게 아니라면
-                activityMainBinding.resultTxt.append(view.getTag().toString()); //append 함수를 통해 값을 이어붙임
+                activityMainBinding.resultTxt.append(view.getTag().toString()); //append 함수를 통해 0값을 이어붙임 ( 맨처음이 0으로 시작하는 조건이 아니기 때문 )
             }
         }
     }
 
     //전부 지우는 메소드
     public void allClearButtonClick (View view){
-        activityMainBinding.resultTxt.setText("0");
-        activityMainBinding.mathTxt.setText("");
-        resultNumber = 0;
-        operator = "+";
-        isFirstInput = true;
+        activityMainBinding.resultTxt.setText("0"); //결과를 setText 함수를 통해 0으로 셋팅
+        activityMainBinding.mathTxt.setText(""); //mathTxt부분도 지움
+        resultNumber = 0; //결과 변수도 0으로 초기화
+        operator = "+"; //연산자도 +로 초기화
+        isFirstInput = true; //아무것도 없는 상황이라 처음 입력으로 돌아왔기 때문에 true로 초기화
         isOperatorClick = false;
     }
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         isOperatorClick = true;
         lastOperator = view.getTag().toString();
         if(isFirstInput){
-            if(operator.equals("=")){
+            if(operator.equals("=")){ //연산자 비료를 통해 참이면
                 operator = view.getTag().toString();
                 resultNumber = Double.parseDouble(activityMainBinding.resultTxt.toString());
                 activityMainBinding.mathTxt.setText(resultNumber + " " + operator + " ");
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }else{
-            inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString());
+            inputNumber = Double.parseDouble(activityMainBinding.resultTxt.getText().toString()); //맨앞에 Double inputNumber... 로 지정하게되면 지정된 함수의 자료형은 double인데 결과를 받는데이터는 String이라 Double.parseDouble을 통해 문자열을 double형으로 변환하게끔 선언
             resultNumber = calculator(resultNumber, inputNumber, operator);
 
             activityMainBinding.resultTxt.setText(String.valueOf(resultNumber));
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
     //연산 함수 메소드
     private double calculator(double resultNumber, double inputNumber, String operator) {
-        switch (operator){
+        switch (operator){ //operator 변수를 스위치문을 통해 각 버튼에 맞는 함수를 실행
             case "=":
                 resultNumber = inputNumber;
                 break;
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("calculator", resultNumber + " " + inputNumber + " " + operator);
                 break;
         }
-        return resultNumber;
+        return resultNumber; //결과값을 반환
     }
 
 
