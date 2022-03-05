@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         }else{ //isFirstInput 값이 false이면 조건 발동
             if(activityMainBinding.resultTxt.getText().toString().equals("0")){ //0버튼 (테그값이 0) 이라면
                 Toast.makeText(this, "0으로 시작되는 숫자는 없습니다.", Toast.LENGTH_LONG).show(); //토스트를 발생시킴
-                isFirstInput = true; //처음에 0으로 입력받았기 때문에 데이터가 입력이 안된상황이라 isFirstInput 데이터를 true으로 선언 ( 이거안하면 두번재 입력받았다고 인식하기 때문)
+                isFirstInput = true; //처음에 0으로 입력받았기 때문에 데이터가 입력이 안된상황이라 isFirstInput 데이터를 true으로 선언 ( 이거안하면 두번재 입력받았다고 인식하기 때문 )
             }else{ //그게 아니라면
                 activityMainBinding.resultTxt.append(view.getTag().toString()); //append 함수를 통해 0값을 이어붙임 ( 맨처음이 0으로 시작하는 조건이 아니기 때문 )
             }
@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
 
     //소수점 버튼 메소드
     public void pointButtonClick (View view){
-        if(isFirstInput){
-            activityMainBinding.resultTxt.setText("0" + view.getTag().toString()); //append가 아닌 setText를 통해 0.을 구현하기위해 "0"을 더해줌
+        if(isFirstInput){ //처음 입력한게 포인트라면
+            activityMainBinding.resultTxt.setText("0" + view.getTag().toString()); //append가 아닌 setText를 통해 0.을 구현하기위해 "0"을 더해줌 (ex 0.1, 0.2 등등
             isFirstInput = false; //첫번째 입력이 끝났기에 false값으로 초기화
-        }else{
-            if(activityMainBinding.resultTxt.getText().toString().contains(".")){ //contains함수를 통해 소수점이 이미 존재한다면
+        }else{ //처음 입력한게 아니라면 ( 이미 숫자를 미리 눌렀다면 )
+            if(activityMainBinding.resultTxt.getText().toString().contains(".")){ //contains함수를 통해 소수점이 이미 존재한다면 ( 처음 누른것도 소수점이고 또 소수점을 눌렀을때의 조건 )
                 Toast.makeText(this, "이미 소숫점이 존재합니다.",Toast.LENGTH_LONG).show(); //이미 소숫점이 존재한다는 토스트 발생
             }else{
-                activityMainBinding.resultTxt.append(view.getTag().toString()); //아니라면 resulrTxt에 값을 붙임
+                activityMainBinding.resultTxt.append(view.getTag().toString()); //아니라면 resulrTxt에 소숫점을 붙임( 슷자를 먼저 눌렀다는 말이니까 그뒤에 소숫점을 붙임)
             }
         }
     }
